@@ -1,13 +1,20 @@
 package com.study.library.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // 기본 세팅 x , 재설정한 세팅으로
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -18,4 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest() // 다른 모든 요청에 대해서는
                 .authenticated(); // 인증된 사용자만 접근할 수 있도록 설정합니다.
     }
+
+
 }
